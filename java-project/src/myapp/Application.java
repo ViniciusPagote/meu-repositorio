@@ -89,7 +89,7 @@ public class Application {
 		pedido.setItens(itens);
 		
 		PrinterApp.imprimirPedido(pedido);
-		PrinterApp.imprimirPedido(pedido);
+
 		
 		
 	
