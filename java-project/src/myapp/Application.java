@@ -1,5 +1,10 @@
 package myapp;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,6 +16,7 @@ import myapp.cadastro.Endereco;
 import myapp.factory.FabricaCadastro;
 import myapp.pedidos.Pedido;
 import myapp.pedidos.PedidoItem;
+import myapp.service.CupomService;
 
 public class Application {
 	public static void main(String[] args) {
@@ -88,8 +94,15 @@ public class Application {
 		
 		pedido.setItens(itens);
 		
-		PrinterApp.imprimirPedido(pedido);
+		String conteudo = CupomService.gerarCupom(pedido);
 
+		File dir = new File("D:\\DESENVOLVIMENTO\\mjv\\meu-repositorio\\cupom");
+		if(!dir.exists());
+		dir.mkdirs();
+		
+		File cupom = new File(dir, "cupom.txt");
+		
+		PrinterApp.print(conteudo, cupom);
 		
 		
 	
