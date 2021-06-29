@@ -1,13 +1,12 @@
 package myapp;
 
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 
 import myapp.cadastro.CD;
 import myapp.cadastro.Cadastro;
@@ -17,15 +16,12 @@ import myapp.factory.FabricaCadastro;
 import myapp.pedidos.Pedido;
 import myapp.pedidos.PedidoItem;
 import myapp.service.CupomService;
+import myapp.util.PrinterApp;
+import myapp.util.ReaderApp;
 
 public class Application {
 	public static void main(String[] args) {
-		//REQUISITO
-		//1 CRIAR OBJETOS QUE RELACIONANDO-SE EU TEREI UMA PESRPECTIVA DE TER UM PEDIDO COM
-		//TODAS AS INFORMAÇÕES
-		//2 IMPRIMIR ESTE PEDIDO NO ESTILO CUPOM
-		
-		
+	
 		Cadastro artista = FabricaCadastro.criarCadastro("BRUCE DICKSON", "a@a", 989089090L);
 			
 		CD p1 = new CD(); 
@@ -49,7 +45,6 @@ public class Application {
 		Cadastro cadEmpresa = new Cadastro();
 		cadEmpresa.setCpfCnpj("12345678000101"); 
 		cadEmpresa.setEmail("pedidos@ifood.com");
-		//cadEmpresa.setEndereco("Rua inacio de nobrega,  1036, centro - SP");
 		cadEmpresa.setNome("IFOOD PEDIDOS");
 		cadEmpresa.setTelefone(11987654321L);
 		empresa.setCadastro(cadEmpresa);
@@ -95,15 +90,14 @@ public class Application {
 		pedido.setItens(itens);
 		
 		String conteudo = CupomService.gerarCupom(pedido);
-
+		 
 		File dir = new File("D:\\DESENVOLVIMENTO\\mjv\\meu-repositorio\\cupom");
-		if(!dir.exists());
-		dir.mkdirs();
-		
-		File cupom = new File(dir, "cupom.txt");
-		
-		PrinterApp.print(conteudo, cupom);
-		
+		try {
+			//PrinterApp.print(conteudo, dir, "cupom.txt");
+			CupomService.gerarPedidos(dir, "pedidos.txt");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 	
 	}
